@@ -14,9 +14,8 @@ def main():
 
     # Directories
     SUB_DIR    = ""
-    SOURCE_DIR = "C:\Perso\Sandbox\SyncDirectories\SRC"
-    DEST_DIR   = "C:\Perso\Sandbox\SyncDirectories\DEST"
-
+    SOURCE_DIR = "C:\Dev\SyncDirectories\SRC"
+    DEST_DIR   = "C:\Dev\SyncDirectories\DEST"
 
     # Add SUB_DIR to source and destination directories
     if SUB_DIR:
@@ -130,10 +129,22 @@ def syncDirectoryCopy(SOURCE_DIR, DEST_DIR):
                 print("Copying", srcFile)
                 shutil.copyfile(srcFile, dstFile)
             else:
-                # Replace file iff. more recent
-                srcLastModifTime = os.path.getmtime(srcFile)
-                dstLastModifTime = os.path.getmtime(dstFile)
-                if(srcLastModifTime > dstLastModifTime):
+                # Check sizes
+                srcSize = os.path.getsize(srcFile)
+                dstSize = os.path.getsize(dstFile)
+                differentSizes = (srcSize != dstSize)
+                #print("Sizes = ", srcSize, dstSize, differentSizes)
+
+                # Check last modification dates
+                # srcLastModifTime = os.path.getmtime(srcFile)
+                # dstLastModifTime = os.path.getmtime(dstFile)
+                #srcModified = (srcLastModifTime > dstLastModifTime)
+
+                replaceFile = differentSizes
+                #replaceFile = differentSizes or modified
+
+                # Replace file iff neded
+                if(replaceFile):
                     nbReplaced += 1
                     print("Replacing", srcFile)
                     shutil.copyfile(srcFile, dstFile)
