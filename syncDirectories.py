@@ -41,6 +41,11 @@ def syncDirectoryClean(SOURCE_DIR, DEST_DIR):
         print("ERROR: Source directory", SOURCE_DIR, "does not exist")
         os.system("pause")
         exit()
+
+    # Create destination directory if not existing
+    if(not os.path.isdir(DEST_DIR)):
+        print("Creating directory", DEST_DIR)
+        os.makedirs(DEST_DIR)
         
     os.chdir(DEST_DIR)
     print("CLEANING", SOURCE_DIR, "->", DEST_DIR)
