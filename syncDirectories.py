@@ -47,8 +47,8 @@ def main(argv):
             print("Simulation test ON")   
             simulate = True
    
-    print('Source directory:      "', SOURCE_DIR, '"')
-    print('Destination directory: "', DEST_DIR, '"')
+    print('Source directory:      "' + SOURCE_DIR + '"')
+    print('Destination directory: "' + DEST_DIR + '"')
     print()
     
     if(not SOURCE_DIR or not DEST_DIR):
@@ -180,10 +180,13 @@ def syncDirectoryCopy(SOURCE_DIR, DEST_DIR, checkFilesDifference = False, simula
 
                 # Replace file iff needed
                 if(replaceFile):
-                    nbReplaced += 1
                     print("Replacing", srcFile)
                     if(not simulate):
-                        shutil.copyfile(srcFile, dstFile)
+                        try:
+                            shutil.copyfile(srcFile, dstFile)
+                            nbReplaced += 1
+                        except:
+                            print("Could not replace", dstFile, "(read only?)")
 
 
     # Print result
