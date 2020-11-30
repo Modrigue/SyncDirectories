@@ -1,7 +1,10 @@
 # SyncDirectories
 A fast tool to synchronize directories file by file.
 
-Usage: python syncDirectories.py -s <source_directory> -d <destination_directory>
+Usage:
+```
+$ python syncDirectories.py -s <source_directory> -d <destination_directory>
+```
 
 Options:
  * -s, --srcdir <dir>:    source directory used as reference for synchronization
