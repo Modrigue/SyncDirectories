@@ -12,6 +12,9 @@ on:
         description: "Build output path"
         value: ${{ jobs.release.outputs.output-path }}
 
+env:
+  SCRIPT_FILE: syncDirectories.py
+
 jobs:
   release:
     runs-on: windows-2022
@@ -43,7 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: $env:SCRIPT_FILE
-          asset_name: $env:SCRIPT_FILE
+          asset_path: ${{ env.SCRIPT_FILE }}
+          asset_name: ${{ env.SCRIPT_FILE }}
           asset_content_type: application/octet-stream
   
