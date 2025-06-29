@@ -18,20 +18,42 @@ env:
 jobs:
   release:
     runs-on: windows-2022
+    outputs:
+      output-path: ${{ steps.upload.outputs.upload-path }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Verify script exists
+        id: check-script
+        run: |
+          if [ ! -f "${{ env.SCRIPT_FILE }}" ]; then
+            echo "::error::Script file ${{ env.SCRIPT_FILE }} not found"
+            ls -la
+            exit 1
+          fi
+
       - name: Create GitHub Release
+        id: create_release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
           name: Sync Directories ${{ github.ref_name }}
           draft: false
           prerelease: false
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Release Asset
-        uses: softprops/action-gh-release@v1
-        with:
-          files: ${{ env.SCRIPT_FILE }}
+        id: upload
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.SCRIPT_FILE }}
+          asset_name: ${{ env.SCRIPT_FILE }}
+          asset_content_type: application/octet-stream
