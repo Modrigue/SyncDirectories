@@ -24,4 +24,4 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     uses: ./.github/workflows/release-python.yml
     with:
-      solution: $env:SCRIPT_FILE
+      script: $env:SCRIPT_FILE

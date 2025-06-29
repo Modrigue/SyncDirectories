@@ -3,7 +3,7 @@ name: Release Python Script
 on:
   workflow_call:
     inputs:
-      solution:
+      script:
         required: true
         type: string
 
@@ -11,9 +11,6 @@ on:
       output-path:
         description: "Build output path"
         value: ${{ jobs.release.outputs.output-path }}
-
-env:
-  SCRIPT_FILE: syncDirectories.py
 
 jobs:
   release:
@@ -45,6 +42,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.SCRIPT_FILE }}
-          asset_name: ${{ env.SCRIPT_FILE }}
+          asset_path: ${{ inputs.script }}
+          asset_name: ${{ inputs.script }}
           asset_content_type: application/octet-stream
