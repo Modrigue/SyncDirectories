@@ -17,4 +17,4 @@ jobs:
           fetch-depth: 0
 
       - name: Check Python syntax
-        run: python -m py_compile $env:SCRIPT_FILE
+        run: python -m py_compile ${{ inputs.script }}
