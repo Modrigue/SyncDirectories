@@ -1,4 +1,4 @@
-name: Build and Release .NET Framework Desktop App
+name: Check and Release Python Script
 
 on:
   push:
