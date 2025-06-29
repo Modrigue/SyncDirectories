@@ -17,4 +17,6 @@ jobs:
           fetch-depth: 0
 
       - name: Check Python syntax
-        run: python -m py_compile $env:SCRIPT_FILE
+        run: |
+          echo $env:SCRIPT_FILE
+          python -m py_compile $env:SCRIPT_FILE
