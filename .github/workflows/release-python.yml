@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: Create GitHub Release and Upload Asset
-        id: upload
+        id: create_release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
@@ -35,3 +35,15 @@ jobs:
           files: $env:SCRIPT_FILE
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+      - name: Upload Release Asset
+        id: upload
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: $env:SCRIPT_FILE
+          asset_name: $env:SCRIPT_FILE
+          asset_content_type: application/octet-stream
+  
