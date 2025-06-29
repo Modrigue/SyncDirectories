@@ -7,6 +7,11 @@ on:
         required: true
         type: string
 
+    outputs:
+      output-path:
+        description: "Build output path"
+        value: ${{ jobs.release.outputs.output-path }}
+
 env:
   SCRIPT_FILE: syncDirectories.py
 
