@@ -1,0 +1,32 @@
+name: Release Python Script
+
+on:
+  workflow_call:
+    inputs:
+      solution:
+        required: true
+        type: string
+
+env:
+  SCRIPT_FILE: syncDirectories.py
+
+jobs:
+  release:
+    runs-on: windows-2022
+    steps:
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Sync Directories ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ env.SCRIPT_FILE }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
