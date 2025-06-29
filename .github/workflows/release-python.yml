@@ -26,15 +26,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify script exists
-        id: check-script
-        run: |
-          if [ ! -f "${{ env.SCRIPT_FILE }}" ]; then
-            echo "::error::Script file ${{ env.SCRIPT_FILE }} not found"
-            ls -la
-            exit 1
-          fi
-
       - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v1
